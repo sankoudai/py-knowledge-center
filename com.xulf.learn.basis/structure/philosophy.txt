@@ -1,0 +1,3 @@
+#P1: == means same appearence, is means same identity
+    (This is different from java. In java:
+     == means same identity, equal method means same appearence.)

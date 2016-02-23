@@ -1,0 +1,18 @@
+P1:  Value and variable are two things.
+
+P2: On type
+    - Every Value has a type. (value type, if you like)
+    - Variable does not have type. So it can point to value of any value type.
+     (You can say variable is of reference type)
+
+P3: On Object
+    - All data(value) is object. You can say all data(value) types are subclass of Object.
+    - Function is data (value) too. So it's object
+
+P4: string  vs  bytes
+    character is an abstraction, string is an immutable sequence of unicode characters: 'abc'
+    bytes are an immutable sequence of numbers-between-0-and-255: b'abc\x12'
+    Never mix them
+
+P5: container are container of references
+    list, tuple .. are container of reference. They can hold anything

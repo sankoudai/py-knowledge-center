@@ -1,0 +1,5 @@
+line 1:This is a text file
+line 2:Empty
+line 3:Empty
+line 4:Empty
+line 5:Empty
