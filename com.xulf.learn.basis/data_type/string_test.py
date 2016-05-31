@@ -38,6 +38,15 @@ class StringTest(unittest.TestCase):
         seq = 'abcab'
         print(seq.count('ab'))
 
+    def index_test(self):
+        """ first occurrence of string
+        """
+        rul = '0123456'
+        seq = '0123433'
+
+        print(seq.index('3'))
+        print(seq.rindex('3'))
+
     def format_placeholder_test(self):
         kb = "KB"
         mb = "MB"
