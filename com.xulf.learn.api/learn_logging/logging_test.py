@@ -23,3 +23,5 @@ class LoggerTest(unittest.TestCase):
 
     def log_test(self):
         self.logger.debug("Hello, logging")
+        self.logger.debug("Hello, logging %s", 'hoho..')
+
