@@ -1,0 +1,9 @@
+1.  module is like object, and each process possesses only instance of it
+    explain:
+        - variable x within module has only one copy.
+          So if you change value of x within one module,
+          it is perceived by other modules imported later.
+
+        - if a module is already imported, it won't be repeatedly imported on next import statement.
+          (module top-level code won't be executed again.)
+
