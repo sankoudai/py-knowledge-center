@@ -1,6 +1,6 @@
-import locale
 import unittest
 from datetime import datetime
+
 from printutil.printutil import printVar
 
 
@@ -18,3 +18,10 @@ class DatetimeTest(unittest.TestCase):
             print('date_str={},  fmt_str={}'.format(date_str, fmt_str))
             printVar(dt)
             print()
+
+    def millis_datetime_conversion_test(self):
+        ms = 1467075826837
+        dt = datetime.fromtimestamp(ms/1000.0)
+        printVar(dt, '%Y-%m-%d %H:%M:%S')
+
+
