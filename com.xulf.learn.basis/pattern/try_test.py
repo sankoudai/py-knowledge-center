@@ -10,7 +10,7 @@ class TryTest(unittest.TestCase):
 
             def __str__(self):
                 return self.name
-        self.user_exception = UserException();
+        self.user_exception = UserException()
     
     def try_except_test(self):
         ''' uncatched exceptions will propagate.
