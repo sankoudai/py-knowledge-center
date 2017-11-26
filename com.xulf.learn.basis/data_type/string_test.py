@@ -1,4 +1,5 @@
 __author__ = 'quiet road'
+import  re
 import unittest
 
 from printutil.printutil import printVar
@@ -19,6 +20,10 @@ class StringTest(unittest.TestCase):
 
     def split_test(self):
         words = self.str.split(" ")
+        printVar(words)
+
+        # split with regexp
+        words = re.split('\s*[,]*\s*', 'hello , jim, lily')
         printVar(words)
 
     def slice_test(self):
