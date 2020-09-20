@@ -21,14 +21,14 @@ class FileTest(unittest.TestCase):
         self.bin_file_read = open("data/pic.bin", mode="rb")
         self.bin_file_write = open("data/file_test_write.bin", mode="wb")
 
-    def type_test(self):
+    def test_type(self):
         assert isinstance(self.text_file_read, _io.TextIOWrapper)
 
-    def attribute_test(self):
+    def test_attribute(self):
         print("file attribute: name={}".format(self.text_file_read.name))
         print("file attribute: encoding={}".format(self.text_file_read.encoding))
 
-    def text_file_read_test(self):
+    def test_text_file_read(self):
         # read by chars
         print('------by char------------')
         self.text_file_read.seek(0)
@@ -62,7 +62,7 @@ class FileTest(unittest.TestCase):
         # close
         self.text_file_read.close()
 
-    def text_file_write_test(self):
+    def test_text_file_write(self):
         # truncate: create if file does not exist
         self.text_file_trunc.write(" later")
 
@@ -76,7 +76,7 @@ class FileTest(unittest.TestCase):
         lines = [' hello\n', ' jimmy\n']
         self.text_file_append.writelines(lines)
 
-    def bin_file_read_test(self):
+    def test_bin_file_read(self):
         # byte
         byte = self.bin_file_read.read(1)
         printVar(byte)
@@ -88,12 +88,12 @@ class FileTest(unittest.TestCase):
 
         self.bin_file_read.close()
 
-    def bin_file_write_test(self):
+    def test_bin_file_write(self):
         self.bin_file_write.write(b"abc")
         self.bin_file_write.write(" abc".encode(encoding="utf-8"))
         self.bin_file_write.close()
 
-    def cursor_position_test(self):
+    def test_cursor_position(self):
         # tell
         pos = self.text_file_read.tell()
         print("current cursor position: {}th byte".format(pos))
@@ -106,7 +106,7 @@ class FileTest(unittest.TestCase):
         pos = self.text_file_read.tell()
         print("current cursor position: {}th byte".format(pos))
 
-    def auto_close_test(self):
+    def test_auto_close(self):
         with open("data/file_test.txt", encoding="utf-8") as f:
             for line in f:
                 print(line)

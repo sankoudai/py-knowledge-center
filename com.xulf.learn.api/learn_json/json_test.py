@@ -6,15 +6,15 @@ class JsonTest(unittest.TestCase):
     def setUp(self):
         self.json_string = '{"first_name": "Guido", "last_name":"Rossum"}'
 
-    def load_test(self):
+    def test_load(self):
         parsed_json = json.loads(self.json_string)
         print(parsed_json)
 
-    def attr_test(self):
+    def test_attr(self):
         parsed_json = json.loads(self.json_string)
         print(parsed_json['first_name'])
 
-    def iter_test(self):
+    def test_iter(self):
         parsed_json = json.loads(self.json_string)
         for attr in parsed_json:
             print(attr, parsed_json[attr])

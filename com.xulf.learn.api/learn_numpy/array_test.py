@@ -10,7 +10,7 @@ class ArrayTest(unittest.TestCase):
         # self.num_arr = np.array
         pass
 
-    def create_1d_test(self):
+    def test_create_1d(self):
         # from sequence
         arr = np.array([0, 3, 4])
         printVar(arr)
@@ -18,7 +18,7 @@ class ArrayTest(unittest.TestCase):
         arr = np.array((1, 3, 4))
         printVar(arr)
 
-    def create_nd_test(self):
+    def test_create_nd(self):
         # 2 X 3
         arr = np.array([[0, 1, 2], [3, 4, 5]])
         self.print_attr(arr)
@@ -29,7 +29,7 @@ class ArrayTest(unittest.TestCase):
         self.print_attr(arr)
         printVar(arr)
 
-    def create_byfunc_test(self):
+    def test_create_byfunc(self):
         # even spaced 1d
         arr = np.arange(10)
         printVar(arr)
@@ -65,13 +65,13 @@ class ArrayTest(unittest.TestCase):
         arr = np.random.randn(4)  # Gaussian
         printVar(arr)
 
-    def dtype_test(self):
+    def test_dtype(self):
         # dtype: int32 int64 float64
         arr = np.array([1, 3], dtype='float64')
         print('dtype={}'.format(arr.dtype))
         printVar(arr)
 
-    def attr_test(self):
+    def test_attr(self):
         arr = np.array([0, 3, 5])
         self.print_attr(arr)
         print()

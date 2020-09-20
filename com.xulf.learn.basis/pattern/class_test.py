@@ -9,7 +9,7 @@ class ClassTest(unittest.TestCase):
                __init__(self, ...): called at instantiation
     """
 
-    def init_test(self):
+    def test_init(self):
         instance = Class("jim")
         instance.print_name()
         instance.call_method()

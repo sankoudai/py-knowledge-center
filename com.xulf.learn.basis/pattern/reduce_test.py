@@ -11,6 +11,6 @@ class ReduceTest(unittest.TestCase):
             where
                 func_xy(x, y) is two-parameter function
     """
-    def reduce_test(self):
+    def test_reduce(self):
         val = reduce(lambda x,y:x+y, [1, 2, 3])
         printVar(val)

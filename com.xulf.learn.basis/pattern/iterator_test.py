@@ -39,21 +39,21 @@ class IteratorTest(unittest.TestCase):
         self.iterable = Range(10)
         self.iterator = iter(self.iterable)
 
-    def iterable_test(self):
+    def test_iterable(self):
         """Under the hood, interpretor calls iter(self.iterable) for you
            This is equivalent to iterator_test.
         """
         for i in self.iterable:
             printVar(i)
 
-    def iterator_test(self):
+    def test_iterator(self):
         """Under the hood, interpretor calls next(self.iterator) for you,
            which calls self.iterator.__next__() to get the next item
         """
         for i in self.iterator:
             printVar(i)
 
-    def next_test(self):
+    def test_next(self):
         printVar(next(self.iterator))
         printVar(next(self.iterator))
         printVar(next(self.iterator))

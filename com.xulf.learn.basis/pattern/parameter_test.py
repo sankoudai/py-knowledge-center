@@ -44,7 +44,7 @@ class ParameterTest(unittest.TestCase):
         self.collect_keyword_param_f = collect_keyword_param_f
         self.collect_mixed_param_f = collect_mixed_param_f
 
-    def positional_param_test(self):
+    def test_positional_param(self):
         self.positional_param_f(1, 2)
 
         try:
@@ -57,7 +57,7 @@ class ParameterTest(unittest.TestCase):
         except TypeError:
             print("Call with less parameters!")
 
-    def keyword_param_test(self):
+    def test_keyword_param(self):
         # order does not matter
         self.keyword_param_f(name="jim", gender="male")
         self.keyword_param_f(gender="male", name="jim")
@@ -66,34 +66,34 @@ class ParameterTest(unittest.TestCase):
         self.keyword_param_f(name="jim")
         self.keyword_param_f()
 
-    def mixed_param_test(self):
+    def test_mixed_param(self):
         self.mixed_param_f(1, 2, name="jim", gender="male")
 
         # keyword params must follow positional params: following line won't run
         # self.mixed_param_f(1, name="jim", 2, gender="male")
 
-    def collect_positional_param_test(self):
+    def test_collect_positional_param(self):
         self.collect_positional_param_f()
         self.collect_positional_param_f(1)
         self.collect_positional_param_f(1, "one")
 
-    def collect_keyword_param_test(self):
+    def test_collect_keyword_param(self):
         self.collect_keyword_param_f()
         self.collect_keyword_param_f(name="jim", age=17)
 
-    def collect_mixed_param_f_test(self):
+    def test_collect_mixed_param_f(self):
         self.collect_mixed_param_f()
         self.collect_mixed_param_f(1, 2)
         self.collect_mixed_param_f(name="jim", gender="male")
         self.collect_mixed_param_f(1, 2, name="jim")
 
-    def unpack_sequence_as_positional_param_test(self):
+    def test_unpack_sequence_as_positional_param(self):
         local_seq = (1, 2)
         self.positional_param_f(*local_seq)
 
         local_seq = [1, 2]
         self.positional_param_f(*local_seq)
     
-    def unpack_dict_as_keyword_param_test(self):
+    def test_unpack_dict_as_keyword_param(self):
         local_dict = {"name": "jim", "gender": "male"}
         self.keyword_param_f(**local_dict)

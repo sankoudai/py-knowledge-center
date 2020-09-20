@@ -62,7 +62,7 @@ class DecoratorTest(unittest.TestCase):
         self.general_param_func_decorator = general_param_func_decorator
         self.with_param_decorator = with_param_decorator
 
-    def use_decorator_test(self):
+    def test_use_decorator(self):
         no_param_func = self.no_param_decorator(self.costly_no_param_func)
         no_param_func()
 
@@ -79,7 +79,7 @@ class DecoratorTest(unittest.TestCase):
         func = self.with_param_decorator("test")(self.costly_no_param_func)
         func()
     
-    def decorator_grammar_sugar_test(self):
+    def test_decorator_grammar_sugar(self):
         """Equivalent to local_func = self.no_param_decorator(local_func)"""
         @self.no_param_decorator
         def local_func():

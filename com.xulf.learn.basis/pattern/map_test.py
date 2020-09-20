@@ -16,7 +16,7 @@ class MapTest(unittest.TestCase):
         self.unary_f = lambda x : x + 1
         self.n_nary_f = lambda x, y : x + y
 
-    def unary_map_test(self):
+    def test_unary_map(self):
         map_object = map(self.unary_f, self.a_list)
         printVar(map_object)
         print()
@@ -24,7 +24,7 @@ class MapTest(unittest.TestCase):
         for item in map_object:
             printVar(item)
 
-    def nnary_map_test(self):
+    def test_nnary_map(self):
         map_object = map(self.n_nary_f, self.a_list, self.b_list)
         printVar(map_object)
         print()
@@ -32,7 +32,7 @@ class MapTest(unittest.TestCase):
         for item in map_object:
             printVar(item)
 
-    def diff_lengths_test(self):
+    def test_diff_lengths(self):
         # map_object has size of self.small_list
         map_object = map(self.n_nary_f, self.a_list, self.small_list)
         printVar(map_object)

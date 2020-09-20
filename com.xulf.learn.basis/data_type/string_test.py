@@ -12,13 +12,13 @@ class StringTest(unittest.TestCase):
     def setUp(self):
         self.str = "The sky is cloudy"
 
-    def type_test(self):
+    def test_type(self):
         print(isinstance(self.str, str))
 
-    def len_test(self):
+    def test_len(self):
         printVar(len(self.str))
 
-    def split_test(self):
+    def test_split(self):
         words = self.str.split(" ")
         printVar(words)
 
@@ -26,24 +26,24 @@ class StringTest(unittest.TestCase):
         words = re.split('\s*[,]*\s*', 'hello , jim, lily')
         printVar(words)
 
-    def slice_test(self):
+    def test_slice(self):
         """ start included, end excluded
         """
         seq = '0123456789'
         print(seq[0:3])
 
-    def append_test(self):
+    def test_append(self):
         seq = '012' + '3'
         print(seq)
 
         seq += str(4)
         print(seq)
 
-    def count_test(self):
+    def test_count(self):
         seq = 'abcab'
         print(seq.count('ab'))
 
-    def index_test(self):
+    def test_index(self):
         """ first occurrence of string
         """
         rul = '0123456'
@@ -52,7 +52,7 @@ class StringTest(unittest.TestCase):
         print(seq.index('3'))
         print(seq.rindex('3'))
 
-    def format_placeholder_test(self):
+    def test_format_placeholder(self):
         kb = "KB"
         mb = "MB"
         tempt_str = "1000{0} = 1{1}".format(kb, mb)
@@ -62,34 +62,34 @@ class StringTest(unittest.TestCase):
         tempt_str = '{1}: {1}=1024{0}'.format(kb, mb)
         printVar(tempt_str)
 
-    def format_list_item_test(self):
+    def test_format_list_item(self):
         li = ['KB', 'MB']
         tempt_str = "1024{0[0]} = 1{0[1]}".format(li)
         printVar(tempt_str)
 
-    def format_dict_item_test(self):
+    def test_format_dict_item(self):
         """Lookup by __getitem method """
         dic = {"name": "Li Lei", "age": 19}
         tempt_str = '{0[name]} is the child'.format(dic)
         printVar(tempt_str)
 
-    def format_object_attribute_test(self):
+    def test_format_object_attribute(self):
         """Lookup throught getattr method:  appended attributes can't be resolved"""
         obj = 3 - 4j
         obj.size = 5
         tempt_str = '{0} has imaginary part :{0.imag}'.format(obj)
         print(tempt_str)
 
-    def format_named_argument_test(self):
+    def test_format_named_argument(self):
         tempt_str = '{name} is {age} years old'.format(name='jim', age=16)
         print(tempt_str)
 
-    def format_left_align_test(self):
+    def test_format_left_align(self):
         tempt_str = "name:{:<15} age:{:<4}"
         print(tempt_str.format('jim', 15))
         print(tempt_str.format('jimmy', 15))
 
-    def format_float_precision_test(self):
+    def test_format_float_precision(self):
         fl = 1.123889
         print("float number: unformated={0}, formated={0:.3f}".format(fl))
 

@@ -13,7 +13,7 @@ class FilterTest(unittest.TestCase):
         self.a_list = [1, 2, 3, 4]
         self.bool_f = lambda x : x % 2 ==0
 
-    def use_test(self):
+    def test_use(self):
         filter_object = filter(self.bool_f, self.a_list)
         printVar(filter_object)
         print()
@@ -21,7 +21,7 @@ class FilterTest(unittest.TestCase):
         for item in filter_object:
             printVar(item)
 
-    def modify_iterator_test(self):
+    def test_modify_iterator(self):
         '''Modifying underlying iterator affects the resulting filter_object,
             even after filter_object is created.
         '''
@@ -31,7 +31,7 @@ class FilterTest(unittest.TestCase):
         for item in filter_object:
             printVar(item)
 
-    def list_test(self):
+    def test_list(self):
         filter_object = filter(self.bool_f, self.a_list)
         local_list = list(filter_object)
         printVar(local_list)

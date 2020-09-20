@@ -10,10 +10,10 @@ class ListTest(unittest.TestCase):
         self.int_list = [2, 3, 7, 12]
         self.mixed_list = ['spring', 1, 'summer', 2, 'autumn', 3, 'winter', 4]
 
-    def type_test(self):
+    def test_type(self):
         print(isinstance(self.string_list, list))
 
-    def slice_test(self):
+    def test_slice(self):
         '''slicing: index forms circle'''
         printVar(self.string_list)
         printVar(self.string_list[0]) # first
@@ -23,7 +23,7 @@ class ListTest(unittest.TestCase):
         printVar(self.string_list[0:3])
         printVar(self.string_list[:3])
 
-    def slice_relation_test(self):
+    def test_slice_relation(self):
         '''Slicing creates a new list'''
         slice_part = self.string_list[0:2]
         print("slice_part before modify -- {}".format(slice_part))
@@ -35,7 +35,7 @@ class ListTest(unittest.TestCase):
 
         print('-----Conclusion: slicing creates a new list-----')
 
-    def add_item_test(self):
+    def test_add_item(self):
         a_list = [1, 2 ,3]
 
         # + creates a second list
@@ -54,7 +54,7 @@ class ListTest(unittest.TestCase):
         a_list.extend([5, 6])
         print("a_list: {}".format(a_list)) # [0, 1, 2, 3, 4, 5, 6]
 
-    def search_item_test(self):
+    def test_search_item(self):
         a_list = ['new', 'world', 'new']
 
         # in
@@ -67,7 +67,7 @@ class ListTest(unittest.TestCase):
         printVar(a_list.index('new'))
         a_list.index('a') # raise exception
 
-    def remove_item_test(self):
+    def test_remove_item(self):
         a_list = ['new', 'world', 'new', 'life', 'new', 'beginning']
 
         # del by index
@@ -84,7 +84,7 @@ class ListTest(unittest.TestCase):
         val = a_list.pop(1)
         print("val:{}, a_list:{}".format(val, a_list))
 
-    def bool_context_test(self):
+    def test_bool_context(self):
         # empty list is false
         if(not []):
           print("Empty list is False in boolean context")

@@ -40,7 +40,7 @@ class WithTest(unittest.TestCase):
 
         self.contextmanager = Timer()
 
-    def with_test(self):
+    def test_with(self):
         printVar(self.contextmanager.get_interval())
         with self.contextmanager as timer:
             for i in range(0, 10000):

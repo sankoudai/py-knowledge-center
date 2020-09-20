@@ -11,27 +11,27 @@ class DictTest(unittest.TestCase):
         self.list_val_dict = {1000:['KB', 'MB'], 1024:['KiB', 'MiB']}
         self.empty_dict = {}
 
-    def type_test(self):
+    def test_type(self):
         print(isinstance(self.str_key_dict, dict))
         print(isinstance(self.empty_dict, dict))
 
-    def value_test(self):
+    def test_value(self):
         printVar(self.str_key_dict)
         printVar(self.int_key_dict)
         printVar(self.list_val_dict)
         printVar(self.empty_dict)
 
-    def access_test(self):
+    def test_access(self):
         printVar(self.str_key_dict['name'])
 
         # nonexist key results in exception
         printVar(self.str_key_dict['gender'])
 
-    def modify_test(self):
+    def test_modify(self):
         self.str_key_dict['name'] = 'jimmy'
         printVar(self.str_key_dict)
 
-    def bool_context_test(self):
+    def test_bool_context(self):
         # empty dict evaluates to false
         if not {}:
             print('Empty dict evaluates to False')

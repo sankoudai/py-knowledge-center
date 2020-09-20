@@ -43,23 +43,23 @@ class GeneratorTest(unittest.TestCase):
         self.infinite_generator_function = infinite_generator_function
         self.comprehension_generator = (2 * item for item in int_list)
 
-    def finite_generator_test(self):
+    def test_finite_generator(self):
         finite_generator = self.finite_generator_function()
         for item in finite_generator:
             printVar(item)
 
-    def infinite_generator_test(self):
+    def test_infinite_generator(self):
         infinite_generator = self.infinite_generator_function()
         for item in infinite_generator:
             if item > 10:
                 break
             printVar(item)
 
-    def comprehension_generator_test(self):
+    def test_comprehension_generator(self):
         for item in self.comprehension_generator:
             printVar(item)
 
-    def isgeneratorfunction_test(self):
+    def test_isgeneratorfunction(self):
         printVar(inspect.isgeneratorfunction(self.finite_generator_function))
 
 

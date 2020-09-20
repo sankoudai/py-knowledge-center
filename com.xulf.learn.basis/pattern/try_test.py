@@ -12,7 +12,7 @@ class TryTest(unittest.TestCase):
                 return self.name
         self.user_exception = UserException()
     
-    def try_except_test(self):
+    def test_try_except(self):
         ''' uncatched exceptions will propagate.
             unhandled exceptions will terminate program.
         '''
@@ -25,7 +25,7 @@ class TryTest(unittest.TestCase):
 
         print("If exception is catched, program will continue")
 
-    def try_except_finally_test(self):
+    def test_try_except_finally(self):
         '''The finally block will be executed, whether exception is raised or not
             Even there is exit() in try and except block
         '''
@@ -39,11 +39,11 @@ class TryTest(unittest.TestCase):
 
         print("You should not be here..")
 
-    def raise_test(self):
+    def test_raise(self):
         raise NameError("test name error")
         print("You should not be here..")
 
-    def user_defined_exception_test(self):
+    def test_user_defined_exception(self):
         raise self.user_exception
 
 if __name__ == '__main__':

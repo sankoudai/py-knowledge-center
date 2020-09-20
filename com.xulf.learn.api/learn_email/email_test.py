@@ -5,7 +5,7 @@ import unittest
 from email.mime.text import MIMEText
 
 class MailSenderText(unittest.TestCase):
-    def send_test(self):
+    def test_send(self):
         # sender =MailSender("smtp.163.com", "fengge_developer@163.com", "fengge_developer",  "fenggekeji6")
         # sender =MailSender("smtp.163.com", "xuliufeng2010@163.com", "xuliufeng2010",  "skd798245503")
         sender =MailSender("smtp.exmail.qq.com", "xvliufeng@fengge.cn", "xvliufeng@fengge.cn",  "skd798245503")

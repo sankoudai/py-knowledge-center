@@ -11,18 +11,18 @@ class SetTest(unittest.TestCase):
         self.mixed_set = set(['1', 1, 1, 2])
         self.empty_set = set()
 
-    def type_test(self):
+    def test_type(self):
         print(isinstance(self.int_set, set))
 
-    def value_test(self):
+    def test_value(self):
         printVar(self.int_set)
         printVar(self.mixed_set)
         printVar(self.empty_set)
     
-    def len_test(self):
+    def test_len(self):
         print(len(self.mixed_set))
         
-    def add_test(self):
+    def test_add(self):
         self.int_set.add(3)
         printVar(self.int_set)
 
@@ -33,7 +33,7 @@ class SetTest(unittest.TestCase):
         self.int_set.update([10, 11])
         printVar(self.int_set)
 
-    def remove_test(self):
+    def test_remove(self):
         # remove: remove nonexist element results in exception
         self.int_set.remove(1)
         printVar(self.int_set)
@@ -48,7 +48,7 @@ class SetTest(unittest.TestCase):
 
         # pop: pop noexist element results in exception
 
-    def set_operation_test(self):
+    def test_set_operation(self):
         local_set = {2, 3, 4, 5}
         # union
         a_set = local_set.union(self.int_set)
@@ -63,7 +63,7 @@ class SetTest(unittest.TestCase):
         a_set = local_set.difference(self.int_set)
         printVar(a_set)
     
-    def relation_test(self):
+    def test_relation(self):
         # in
         print(1 in self.int_set)
 
@@ -75,7 +75,7 @@ class SetTest(unittest.TestCase):
         # isdisjoint
         print(self.int_set.isdisjoint(local_set))
 
-    def bool_context_test(self):
+    def test_bool_context(self):
         # empty set evaluates to false
         if not set():
             print("empty set evaluates to False")

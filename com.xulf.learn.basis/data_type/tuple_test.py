@@ -11,7 +11,7 @@ class TupleTest(unittest.TestCase):
         self.mixed_tuple = ('spring', 1, 'summer', 2, 'autumn', 3, 'winter', 4)
         self.single_ele_tuple = (1,)
 
-    def type_test(self):
+    def test_type(self):
         print(isinstance(self.string_tuple, tuple))
 
     def test(self):
@@ -20,7 +20,7 @@ class TupleTest(unittest.TestCase):
         print(self.string_tuple.index('is'))
         print(self.string_tuple.count('is'))
 
-    def bool_context_test(self):
+    def test_bool_context(self):
         # empty list is false
         if(not ()):
             print("Empty tuple is False in boolean context")

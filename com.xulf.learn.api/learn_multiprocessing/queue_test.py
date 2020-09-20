@@ -14,7 +14,7 @@ class QueueTest(unittest.TestCase):
     def setUp(self):
         self.q = mp.Queue(1)
 
-    def put_test(self):
+    def test_put(self):
         self.q.put(1)
 
         try:
@@ -29,7 +29,7 @@ class QueueTest(unittest.TestCase):
 
         self.q.empty()
 
-    def get_test(self):
+    def test_get(self):
         self.q.put(2)
 
         i = self.q.get()

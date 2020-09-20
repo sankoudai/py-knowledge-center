@@ -7,12 +7,12 @@ class PlotTest(unittest.TestCase):
     def setUp(self):
         super().setUp()
 
-    def plot_xy_test(self):
+    def test_plot_xy(self):
         # simplest xy plot
         plt.plot([1, 2, 3, 4], [1, 4, 9, 16], 'ro')
         plt.show()
 
-    def multiplot_xy_test(self):
+    def test_multiplot_xy(self):
         # multiline plots
         x = [i for i in range(10)]
         y1 = [i for i in range(10)]
@@ -32,7 +32,7 @@ class PlotTest(unittest.TestCase):
         plt.show()
 
 
-    def legend_test(self):
+    def test_legend(self):
         # x = [1, 2, 3, 4]
         # y = [1, 4, 9, 16]
         # plt.plot(x, y, 'ro', label='square')

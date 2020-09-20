@@ -18,7 +18,7 @@ class ImportTest(unittest.TestCase):
         self.set_false = set()
         self.dict_false = {}
 
-    def false_test(self):
+    def test_false(self):
         if not self.bool_false:
             print('bool : False is false in boolean context')
         if not self.none_false:
@@ -38,7 +38,7 @@ class ImportTest(unittest.TestCase):
         if not self.dict_false:
             print('dict: {} is false in boolean context')
     
-    def equal_test(self):
+    def test_equal(self):
         '''== means same appearance
             1.x == y calls x.__eq__(y)
               x != y calls x.__ne__(y)
@@ -50,7 +50,7 @@ class ImportTest(unittest.TestCase):
         if x == y:
             print('== means same appearance')
 
-    def order_test(self):
+    def test_order(self):
         '''1. x < y calls x.__lt__(y)
               x <= y calls x.__le__(y)
               x > y calls x.__gt__(y)
@@ -62,7 +62,7 @@ class ImportTest(unittest.TestCase):
         if(y > x):
             print('string is ordered lexicographically')
 
-    def identity_test(self):
+    def test_identity(self):
         '''is means same identity
            is can't be customized
         '''
@@ -72,13 +72,13 @@ class ImportTest(unittest.TestCase):
         print("x is y: {}".format(x is y)) # False
         print("x == y: {}".format(x == y)) # True
 
-    def else_test(self):
+    def test_else(self):
         if False:
             print("You won't be here")
         else:
             print("You should be here")
 
-    def elif_test(self):
+    def test_elif(self):
         num = 4
         if num < 0:
             print("No")
@@ -87,7 +87,7 @@ class ImportTest(unittest.TestCase):
         else:
             printVar(num)
 
-    def short_circuit_logic_test(self):
+    def test_short_circuit_logic(self):
         '''You can use short circuit in expressions other than bool'''
         res = 'jim' or "Unknown"
         printVar(res)

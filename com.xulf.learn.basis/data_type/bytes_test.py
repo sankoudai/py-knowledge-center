@@ -11,14 +11,14 @@ class BytesTest(unittest.TestCase):
         self.double_quote_bytes = b"allow single quotes''"
         self.hexadecimal_bytes = b'\xff'
 
-    def type_test(self):
+    def test_type(self):
         assert isinstance(self.single_quote_bytes, bytes)
 
-    def value_test(self):
+    def test_value(self):
         printVar(self.single_quote_bytes)
         printVar(self.hexadecimal_bytes)
 
-    def int_conversion_test(self):
+    def test_int_conversion(self):
         # to int
         i = self.single_quote_bytes[0]
         printVar(i)
@@ -27,7 +27,7 @@ class BytesTest(unittest.TestCase):
         b = bytes([15])
         printVar(b)
     
-    def string_conversion_test(self):
+    def test_string_conversion(self):
         string = "012345"
         # string to bytes
         b = bytes(string, encoding="utf-8")

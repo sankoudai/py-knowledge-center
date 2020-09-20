@@ -9,23 +9,23 @@ class ComprehensionTest(unittest.TestCase):
         self.seq = [1, 2, 2, 3]
         self.dict = {"one":1, "two":2}
 
-    def list_comprehension_test(self):
+    def test_list_comprehension(self):
         local_list = [2*item for item in self.seq]
         printVar(local_list)
 
-    def set_comprehension_test(self):
+    def test_set_comprehension(self):
         local_set = {item for item in self.seq}
         printVar(local_set)
 
-    def dict_comprehension_test(self):
+    def test_dict_comprehension(self):
         reversed_dict = {val:key for key, val in self.dict.items()}
         printVar(reversed_dict)
 
-    def generator_test(self):
+    def test_generator(self):
         local_generator = (2*item for item in self.seq)
         printVar(local_generator)
 
-    def if_comprehension_test(self):
+    def test_if_comprehension(self):
         filtered_list = [i for i in self.seq if i != 2]
         printVar(filtered_list)
 

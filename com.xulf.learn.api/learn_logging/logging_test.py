@@ -21,7 +21,7 @@ class LoggerTest(unittest.TestCase):
         logger.addHandler(handler)
         self.logger = logger
 
-    def log_test(self):
+    def test_log(self):
         self.logger.debug("Hello, logging")
         self.logger.debug("Hello, logging %s", 'hoho..')
 
