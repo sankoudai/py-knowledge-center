@@ -1,0 +1,2 @@
+ - install: pip install  -i https://pypi.tuna.tsinghua.edu.cn/simple tensorflow-probability
+ - refer:  https://www.tensorflow.org/probability/overview
