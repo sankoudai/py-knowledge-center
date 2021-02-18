@@ -21,6 +21,11 @@ def assert_equal(tensor, val, tol=None):
     else:
         assert np.all(np.less(np.abs(tensor-val), tol))
 
+def assert_equal_ta(ta1, ta2, tol=None):
+    t1 = ta1.stack()
+    t2 = ta2.stack()
+    assert_equal(t1, t2, tol)
+
 def assert_same(v1, v2):
     assert v1 is v2
 
