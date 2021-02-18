@@ -21,5 +21,8 @@ def assert_equal(tensor, val, tol=None):
     else:
         assert np.all(np.less(np.abs(tensor-val), tol))
 
+def assert_same(v1, v2):
+    assert v1 is v2
+
 def assert_ne(tensor, val, tol=10e-6):
     assert np.all(np.greater(np.abs(tensor-val), tol))
