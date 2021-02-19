@@ -10,6 +10,7 @@ class TestFunction(unittest.TestCase):
             参考：
             - RFC: https://github.com/tensorflow/community/pull/20/files
             - guide: https://www.tensorflow.org/guide/function
+                     https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/autograph/g3doc/reference/control_flow.md
 
         说明：
         execution mode

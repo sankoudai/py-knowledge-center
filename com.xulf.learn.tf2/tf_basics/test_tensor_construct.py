@@ -35,7 +35,6 @@ class TensorConstructTest(TestCase):
         # tf.range(start, limit=None, delta=1): limit not included!!
         t = tf.range(0.0, 3.0, 1.0)
         assert_val(t, [0.0, 1.0, 2.0])
-        print(t)
 
 
 

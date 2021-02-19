@@ -7,7 +7,7 @@ from except_util import *
 
 class TestIndexing(unittest.TestCase):
     def test_single_axis(self):
-        ## 抽取固定间隔的行
+        # 抽取固定间隔的行
         # t[i]：规则与python一致
         # a. 第一个元素 0
         # b. 最后一个元素 -1
