@@ -26,6 +26,10 @@ def assert_equal_ta(ta1, ta2, tol=None):
     t2 = ta2.stack()
     assert_equal(t1, t2, tol)
 
+def assert_equal_sparse(sparse_tensor, dense_tensor):
+    t = tf.sparse.to_dense(sparse_tensor)
+    assert_equal(t, dense_tensor)
+
 def assert_same(v1, v2):
     assert v1 is v2
 

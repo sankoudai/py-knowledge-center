@@ -39,3 +39,13 @@ class TestArithmetic(TestCase):
         # tf1 中是tf.reciprocal
         t = tf.math.reciprocal(tf.constant([1.0, 2.0], dtype=tf.float32))
         assert_equal(t, [1, 0.5])
+
+        #取模
+        # tf.math.mod(x, y, name=None)
+        #   返回：x/y的余数
+        x = tf.constant([4, 5])
+
+        y = tf.constant(3)
+        assert_equal([1, 2], tf.math.mod(x, y))
+        y=tf.constant([2, 3])
+        assert_equal([0, 2], tf.math.mod(x, y))

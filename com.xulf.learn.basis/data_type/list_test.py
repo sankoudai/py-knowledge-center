@@ -23,6 +23,10 @@ class ListTest(unittest.TestCase):
         printVar(self.string_list[0:3])
         printVar(self.string_list[:3])
 
+        # start:stop:step
+        a = [0, 1, 2, 3, 4]
+        print(a[::2])
+
     def test_slice_relation(self):
         '''Slicing creates a new list'''
         slice_part = self.string_list[0:2]
