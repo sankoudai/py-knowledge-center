@@ -1,7 +1,6 @@
 import tensorflow as tf
+from tensorflow import debugging as tfd
 import tensorflow.compat.v1 as tf1
-from cmp_util import *
-from except_util import *
 import unittest
 import os
 
@@ -27,22 +26,6 @@ class TestModule(unittest.TestCase):
         1. https://www.tensorflow.org/api_docs/python/tf/Module
         2. https://www.tensorflow.org/guide/intro_to_modules#defining_models_and_layers_in_tensorflow
     '''
-
-    def test_example_module(self):
-        # 一般的tf.Module定义样子
-        class Dense(tf.Module):
-            def __init__(self, input_size, out_size, name=None):
-                super(Dense, self).__init__(name=name)
-                self.w = tf.Variable(tf.random.normal([input_size, out_size]), name='w')
-                self.b = tf.Variable(tf.random.normal([out_size]), name='b')
-
-            def __call__(self, x):
-                return x @ self.w + self.b
-
-        dense = Dense(3, 2)
-        t = dense(tf.constant([[1.0, 2.0, 3.0],
-                               [4.0, 5.0, 6.0]]))
-        assert_shape(t, [2, 2])
 
     def test_attributes(self):
         class Dense(tf.Module):
@@ -71,14 +54,48 @@ class TestModule(unittest.TestCase):
 
         # variables
         var_names = [v.name for v in model.variables]
-        tf.assert_equal(['dense/b:0', 'dense/c:0', 'dense/w:0', 'dense/b:0', 'dense/c:0', 'dense/w:0'],
+        tfd.assert_equal(['dense/b:0', 'dense/c:0', 'dense/w:0', 'dense/b:0', 'dense/c:0', 'dense/w:0'],
                         var_names)
 
         # trainable_variables
         var_names = [v.name for v in model.trainable_variables]
-        tf.assert_equal(['dense/b:0', 'dense/w:0', 'dense/b:0', 'dense/w:0'],
+        tfd.assert_equal(['dense/b:0', 'dense/w:0', 'dense/b:0', 'dense/w:0'],
                         var_names)
 
         # submodules
         submod_names = [m.name for m in model.submodules]
         tf.assert_equal(['dense', 'dense'], submod_names)
+
+    def test_usecase(self):
+        # 一般的tf.Module定义样子
+        class Dense(tf.Module):
+            def __init__(self, input_size, out_size, name=None):
+                super(Dense, self).__init__(name=name)
+                self.w = tf.Variable(tf.random.normal([input_size, out_size]), name='w')
+                self.b = tf.Variable(tf.random.normal([out_size]), name='b')
+
+            def __call__(self, x):
+                return x @ self.w + self.b
+
+        dense = Dense(3, 2)
+        t = dense(tf.constant([[1.0, 2.0, 3.0],
+                               [4.0, 5.0, 6.0]]))
+        tfd.assert_equal(t.shape, [2, 2])
+
+        # 推迟tf.Variable的创建
+        class FlexibleDense(tf.Module):
+            def __init__(self, out_size, name=None):
+                super(FlexibleDense, self).__init__(name=name)
+                self.out_size = out_size
+                self.built = False
+
+            def __call__(self, x):
+                if not self.built:
+                    self.w = tf.Variable(tf.random.normal([x.shape[-1], self.out_size]))
+                    self.b = tf.Variable(tf.random.normal([self.out_size]))
+                return x @ self.w + self.b
+
+        flexible_dense = Dense(2)
+        t = dense(tf.constant([[1.0, 2.0, 3.0],
+                               [4.0, 5.0, 6.0]]))
+        tf.assert_equal(t.shape, [2,2])
