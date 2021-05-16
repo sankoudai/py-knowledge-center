@@ -111,3 +111,4 @@ class TestAutoDiff(unittest.TestCase):
 
         grads = tape.gradient(loss, layer.trainable_variables)
         print(grads)
+
