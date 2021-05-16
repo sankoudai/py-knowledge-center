@@ -95,7 +95,7 @@ class TestModule(unittest.TestCase):
                     self.b = tf.Variable(tf.random.normal([self.out_size]))
                 return x @ self.w + self.b
 
-        flexible_dense = Dense(2)
+        flexible_dense = FlexibleDense(2)
         t = dense(tf.constant([[1.0, 2.0, 3.0],
                                [4.0, 5.0, 6.0]]))
         tf.assert_equal(t.shape, [2,2])
