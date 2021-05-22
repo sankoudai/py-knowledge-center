@@ -1,0 +1,8 @@
+# 训练流程
+    # pure tf1
+    # keras
+    # estimator
+
+# 数据加载
+
+# 分布式训练
