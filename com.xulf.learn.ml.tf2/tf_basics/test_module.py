@@ -92,7 +92,12 @@ class TestModule(unittest.TestCase):
                     self.b = tf.Variable(tf.random.normal([self.out_size]))
                 return x @ self.w + self.b
 
+<<<<<<< HEAD:com.xulf.learn.tf2/tf_basics/test_module.py
         flexible_dense = Dense(2)
         t = flexible_dense(tf.constant([[1.0, 2.0, 3.0],
+=======
+        flexible_dense = FlexibleDense(2)
+        t = dense(tf.constant([[1.0, 2.0, 3.0],
+>>>>>>> 566cf25349793a8941b1c27680794458e54b4be5:com.xulf.learn.ml.tf2/tf_basics/test_module.py
                                [4.0, 5.0, 6.0]]))
         tf.assert_equal(t.shape, [2, 2])

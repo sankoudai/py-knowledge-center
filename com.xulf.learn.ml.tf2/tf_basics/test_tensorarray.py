@@ -77,6 +77,12 @@ class TestTensorArray(unittest.TestCase):
         ta2.split([1, 2, 3, 4], lengths=[2, 2])
         assert_equal_ta(ta1, ta2)
 
+        ta1 = tf.TensorArray(tf.int32, size=2)
+        ta1.write(0, tf.constant([[1]]))
+        ta1.write(1, tf.constant([[3]]))
+        print(ta1.concat())
+        print(ta1.stack())
+
     def test_gather_scatter(self):
         ## TensorArray <-> Tensor: 通过indices指定子集
         ta1 = tf.TensorArray(tf.int32, size=3)
