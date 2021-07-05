@@ -5,6 +5,8 @@
 
 ## Directory-based project format:
 .idea/
+com.xulf.learn.ml.tf2/.DS_Store
+com.xulf.learn.ml.tf2/topic_examples/data/*
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:
