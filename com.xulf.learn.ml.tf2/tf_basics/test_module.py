@@ -31,7 +31,7 @@ class TestModule(unittest.TestCase):
         class Dense(tf.Module):
             def __init__(self, input_size, out_size, name=None):
                 super(Dense, self).__init__(name=name)
-                with self.name_scope: #用于变量分组， 便于区分与展示(如在tensorboard)
+                with self.name_scope:  # 用于变量分组， 便于区分与展示(如在tensorboard)
                     self.w = tf.Variable(tf.random.normal([input_size, out_size]), name='w')
                     self.b = tf.Variable(tf.random.normal([out_size]), name='b')
                     self.c = tf.Variable(1., name='c', trainable=False)
@@ -53,18 +53,15 @@ class TestModule(unittest.TestCase):
         model = SeqModule(name='mlp')
 
         # variables
-        var_names = [v.name for v in model.variables]
-        tfd.assert_equal(['dense/b:0', 'dense/c:0', 'dense/w:0', 'dense/b:0', 'dense/c:0', 'dense/w:0'],
-                        var_names)
+        assert model.variables == (model.dense_1.b, model.dense_1.c, model.dense_1.w,
+                                   model.dense_2.b, model.dense_2.c, model.dense_2.w)
 
         # trainable_variables
-        var_names = [v.name for v in model.trainable_variables]
-        tfd.assert_equal(['dense/b:0', 'dense/w:0', 'dense/b:0', 'dense/w:0'],
-                        var_names)
+        assert model.trainable_variables == (model.dense_1.b, model.dense_1.w,
+                                             model.dense_2.b, model.dense_2.w)
 
         # submodules
-        submod_names = [m.name for m in model.submodules]
-        tf.assert_equal(['dense', 'dense'], submod_names)
+        assert model.submodules == (model.dense_1, model.dense_2)
 
     def test_usecase(self):
         # 一般的tf.Module定义样子
@@ -95,7 +92,12 @@ class TestModule(unittest.TestCase):
                     self.b = tf.Variable(tf.random.normal([self.out_size]))
                 return x @ self.w + self.b
 
+<<<<<<< HEAD:com.xulf.learn.tf2/tf_basics/test_module.py
+        flexible_dense = Dense(2)
+        t = flexible_dense(tf.constant([[1.0, 2.0, 3.0],
+=======
         flexible_dense = FlexibleDense(2)
         t = dense(tf.constant([[1.0, 2.0, 3.0],
+>>>>>>> 566cf25349793a8941b1c27680794458e54b4be5:com.xulf.learn.ml.tf2/tf_basics/test_module.py
                                [4.0, 5.0, 6.0]]))
-        tf.assert_equal(t.shape, [2,2])
+        tf.assert_equal(t.shape, [2, 2])
