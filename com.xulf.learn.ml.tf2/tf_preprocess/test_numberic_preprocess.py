@@ -29,7 +29,15 @@ class TestNumberic(unittest.TestCase):
     def test_normalize(self):
         normalize_layer = preprocessing.Normalization()
         normalize_layer.adapt(self.features)
+        print(normalize_layer.variables)
+        print()
 
+        #测试normalize
+        test_feat = self.features[0:1]
+        print(test_feat)
+        print(normalize_layer(test_feat))
+
+        # 训练模型
         model = tf.keras.Sequential([
             normalize_layer,
             layers.Dense(10),
