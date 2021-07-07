@@ -19,10 +19,10 @@ model = tf.keras.Sequential([
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
-
+stop_early = tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=5)
 
 # train
-model.fit(train_images, train_labels, epochs=10)
+model.fit(train_images, train_labels, epochs=50, validation_split=0.2, callbacks=stop_early)
 
 # eval
 test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)

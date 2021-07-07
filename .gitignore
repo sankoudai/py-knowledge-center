@@ -7,6 +7,7 @@
 .idea/
 com.xulf.learn.ml.tf2/.DS_Store
 com.xulf.learn.ml.tf2/topic_examples/data/*
+com.xulf.learn.ml.tf2/topic_examples/my_dir/*
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:
