@@ -30,8 +30,20 @@ def assert_equal_sparse(sparse_tensor, dense_tensor):
     t = tf.sparse.to_dense(sparse_tensor)
     assert_equal(t, dense_tensor)
 
+def assert_equal_dict(d1, d2):
+    for key, val in d1.items():
+        assert key in d2
+        assert_equal(val, d2[key])
+    for key, val in d2.items():
+        assert key in d1
+        assert_equal(val, d1[key])
+
+
 def assert_same(v1, v2):
     assert v1 is v2
 
 def assert_ne(tensor, val, tol=10e-6):
     assert np.all(np.greater(np.abs(tensor-val), tol))
+
+def assert_type(param, data_type):
+    assert type(param) is data_type
