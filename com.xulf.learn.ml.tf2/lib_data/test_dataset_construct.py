@@ -22,13 +22,16 @@ class TestDatasetDef(unittest.TestCase):
            param有以下情形：
               a) tuple： element是同长tuple (of tensor)
               b) dict:  element是同key的dict (of tensor)
-              c) list:  element是tensor
+              c) list or np.array:  element是tensor
         '''
-        #param是list
+        #param是list or np.array
         dataset = tf.data.Dataset.from_tensor_slices([1, 2, 3])
         assert_equal(first_element_of(dataset), 1)
 
         dataset = tf.data.Dataset.from_tensor_slices([[1, 2, 3], [4, 5, 6]])
+        assert_equal(first_element_of(dataset), [1, 2, 3])
+
+        dataset = tf.data.Dataset.from_tensor_slices(np.array([[1, 2, 3], [4, 5, 6]]))
         assert_equal(first_element_of(dataset), [1, 2, 3])
 
         #param是tuple
@@ -39,4 +42,23 @@ class TestDatasetDef(unittest.TestCase):
         dataset = tf.data.Dataset.from_tensor_slices({'f1': [1, 2, 3], 'f2':[4, 5, 6]})
         print(first_element_of(dataset))
         assert_equal_dict(first_element_of(dataset), {'f1':1, 'f2':4})
+
+        ## 综合示例：param是(dict, tuple)
+        features = {'f1': np.array([1, 2, 3]), 'f2':np.array([4, 5, 6])}
+        labels = np.array([1, 0, 1])
+        dataset = tf.data.Dataset.from_tensor_slices((features, labels))
+
+        elem = first_element_of(dataset)
+        assert_equal_dict(elem[0], {'f1':1, 'f2':4})
+        assert_val(elem[1], 1)
+
+    def test_zip(self):
+        ## 综合示例：param是(dict, tuple)
+        features = tf.data.Dataset.from_tensor_slices({'f1': np.array([1, 2, 3]), 'f2':np.array([4, 5, 6])})
+        labels = tf.data.Dataset.from_tensor_slices(np.array([1, 0, 1]))
+
+        dataset = tf.data.Dataset.zip((features, labels))
+        elem = first_element_of(dataset)
+        assert_equal_dict(elem[0], {'f1':1, 'f2':4})
+        assert_val(elem[1], 1)
 
