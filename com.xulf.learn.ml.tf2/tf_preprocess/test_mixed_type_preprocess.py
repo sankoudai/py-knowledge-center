@@ -12,7 +12,7 @@ np.set_printoptions(precision=3, suppress=True)
 
 class TestMixedType(unittest.TestCase):
     def setUp(self) -> None:
-        train_df = pd.read_csv('data/titanic/train.csv', sep=',')
+        train_df = pd.read_csv('../data/titanic/train.csv', sep=',')
 
         self.features = train_df.copy()
         self.labels = self.features.pop('survived')

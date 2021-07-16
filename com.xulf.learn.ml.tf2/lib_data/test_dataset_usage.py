@@ -32,6 +32,10 @@ class TestDatasetUsage(unittest.TestCase):
         pred = model.predict([[1, 2]])
         print(pred)
 
+        # evaluate
+        loss = model.evaluate(ds)
+        print(loss)
+
 
 
 

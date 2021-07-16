@@ -14,7 +14,7 @@ class TestNumberic(unittest.TestCase):
         # 读入内存
         headers = ["Length", "Diameter", "Height", "Whole weight", "Shucked weight",
                    "Viscera weight", "Shell weight", "Age"]
-        abalone_train = pd.read_csv('data/abalone_train.csv', sep=',', names=headers)
+        abalone_train = pd.read_csv('../data/abalone_train.csv', sep=',', names=headers)
 
         # 拆分features, label
         features = abalone_train.copy()
