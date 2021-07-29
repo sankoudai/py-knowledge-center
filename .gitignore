@@ -111,6 +111,7 @@ docs/_build/
 # PyBuilder
 target/
 
+/local_projects/dataset
 /local_projects/data/feature_poi.txt
 /local_projects/dataset/orders_poi_session.txt
 /local_projects/dataset/orders_spu_train.txt
