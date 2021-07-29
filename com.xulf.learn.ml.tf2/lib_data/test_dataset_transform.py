@@ -9,12 +9,23 @@ np.set_printoptions(precision=3)
 
 class TestDatasetTransform(unittest.TestCase):
     def test_map(self):
+        """
+            ds.map(func):
+            - func: use tf ops whenever possible; use tf.py_function if non-tf ops is needed
+        """
+
         elems = [(1, "foo"), (2, "bar"), (3, "baz")]
         ds = tf.data.Dataset.from_generator(lambda: elems,
                                             output_signature=(tf.TensorSpec(shape=(), dtype=tf.int32),
                                                               tf.TensorSpec(shape=(), dtype=tf.string)))
         new_ds = ds.map(lambda x, y: x)
         assert_val(first_element_of(new_ds), 1)
+
+        # func: of tf ops
+        add_func = lambda x,y: y
+        new_ds = ds.map(add_func)
+        assert_equal_tf(first_element_of(new_ds), 'foo')
+
 
     def test_filter(self):
         ds = tf.data.TextLineDataset('data/example1.txt')
