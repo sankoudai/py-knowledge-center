@@ -15,13 +15,11 @@ def assert_less(tensor, val):
 def assert_greater(tensor, val):
     assert np.all(np.greater(tensor, val))
 
-def assert_equal_tf(tensor, val, tol=None):
-    if tol is None:
-        assert np.all(tf.equal(tensor, val))
-    else:
-        assert np.all(np.less(np.abs(tensor-val), tol))
-
 def assert_equal(tensor, val, tol=None):
+    if type(val) == str:
+        assert np.all(tf.equal(tensor, val))
+        return
+
     if tol is None:
         assert np.all(np.equal(tensor, val))
     else:
@@ -43,6 +41,10 @@ def assert_equal_dict(d1, d2):
     for key, val in d2.items():
         assert key in d1
         assert_equal(val, d1[key])
+
+def assert_equal_iterable(iter1, iter2):
+    for i, j in zip(iter1, iter2):
+        assert_equal(i, j)
 
 def assert_same(v1, v2):
     assert v1 is v2
