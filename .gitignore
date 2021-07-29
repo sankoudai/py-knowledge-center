@@ -111,3 +111,14 @@ docs/_build/
 # PyBuilder
 target/
 
+/local_projects/data/feature_poi.txt
+/local_projects/dataset/orders_poi_session.txt
+/local_projects/dataset/orders_spu_train.txt
+/local_projects/dataset/orders_test_poi.txt
+/local_projects/dataset/orders_test_spu.txt
+/local_projects/dataset/orders_train.txt
+/local_projects/dataset/pois.txt
+/local_projects/data/recs_aor.txt
+/local_projects/data/recs_aor_top100.txt
+/local_projects/dataset/spus.txt
+/local_projects/dataset/users.txt
