@@ -53,6 +53,7 @@ class TestDatasetDef(unittest.TestCase):
         elem = first_element_of(dataset)
         assert_equal_dict(elem[0], {'f1':1, 'f2':4})
         assert_val(elem[1], 1)
+        print(dataset.element_spec)
 
     def test_from_generator(self):
         '''
