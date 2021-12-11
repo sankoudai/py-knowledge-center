@@ -9,6 +9,9 @@ np.set_printoptions(precision=3)
 
 
 class TestDatasetTransform(unittest.TestCase):
+    '''
+        test for ops that change dataset element value, mainly
+    '''
     def test_map(self):
         """
             ds.map(func):
@@ -31,16 +34,6 @@ class TestDatasetTransform(unittest.TestCase):
         power_func_py = lambda x, y: (tf.py_function(math.pow, (2, x), tf.float32), y)
         new_ds = ds.map((power_func_py))
         assert_equal_iterable(first_element_of(new_ds), (2., 'foo'))
-
-    def test_filter(self):
-        ds = tf.data.TextLineDataset('data/example1.txt')
-
-        rm_comment_filter = lambda line: tf.not_equal(tf.strings.substr(line, 0, 1), '#')
-        new_ds = ds.filter(rm_comment_filter)
-
-        print(list(ds.as_numpy_iterator()))
-        print()
-        print(list(new_ds.as_numpy_iterator()))
 
     def test_apply(self):
         """
@@ -72,17 +65,5 @@ class TestDatasetTransform(unittest.TestCase):
         new_ds = batch_ds.unbatch()
         assert_equal(first_element_of(new_ds), 0)
 
-    def test_resample(self):
-        # resample with reject
-        ds = tf.data.Dataset.from_tensor_slices(([1.1, 1.2, 1.3, 1.4, 1.4, 1.4, 1.5],
-                                                 [1, 0, 1, 1, 1, 1, 0]))
-        resampler = tf.data.experimental.rejection_resample(
-            lambda feat, label: label,
-            [0.5, 0.5],
-            initial_dist=[2 / 7, 5 / 7]
-        )
 
-        batch_ds = ds.apply(resampler) \
-            .map(lambda extra_label, feat_label: feat_label) \
-            .batch(10)
-        print(first_element_of(batch_ds))
+
