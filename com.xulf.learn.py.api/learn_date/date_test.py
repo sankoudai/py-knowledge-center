@@ -2,7 +2,6 @@ import unittest
 from datetime import datetime
 
 from printutil.printutil import printVar
-op
 
 class DatetimeTest(unittest.TestCase):
     def setUp(self):
