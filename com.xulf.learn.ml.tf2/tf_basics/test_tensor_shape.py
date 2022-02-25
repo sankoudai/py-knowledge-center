@@ -23,8 +23,10 @@ class TestShape(unittest.TestCase):
         print(mergedim_t)
         assert_equal([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], mergedim_t)
 
-    def test_expand_dim(self):
-        ''' 增加一维 '''
+    def test_dim_op(self):
+        ''' 增加size=1的一维: tf.expand_dims
+            去除size=1的一维: tf.squeeze
+        '''
         # tf.expand_dims
         t = tf.zeros((2, 3))
         assert_shape(tf.expand_dims(t, 0), (1, 2, 3))
@@ -37,3 +39,12 @@ class TestShape(unittest.TestCase):
 
         new_t = t[:, tf.newaxis, :]
         assert_shape(new_t, (2, 1, 3))
+
+        # tf.squeeze
+        t = tf.zeros((1, 2, 1, 3))
+        # 不指定axis
+        assert_shape(tf.squeeze(t), (2, 3))
+
+        # 指定axis
+        assert_shape(tf.squeeze(t, axis=0), (2, 1, 3))
+        assert_shape(tf.squeeze(t, axis=2), (1, 2, 3))

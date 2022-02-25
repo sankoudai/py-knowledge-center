@@ -124,3 +124,4 @@ target/
 /local_projects/dataset/spus.txt
 /local_projects/dataset/users.txt
 /com.xulf.learn.ml.models/data/
+/com.xulf.learn.ml.dgl/data/
