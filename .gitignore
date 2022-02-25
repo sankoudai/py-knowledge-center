@@ -125,3 +125,9 @@ target/
 /local_projects/dataset/users.txt
 /com.xulf.learn.ml.models/data/
 /com.xulf.learn.ml.dgl/data/
+/com.xulf.learn.ml.dgl/dgl_examples/dataset/
+/com.xulf.learn.ml.dgl/dgl_cases/dataset/
+/com.xulf.learn.ml.tf1/model_utils/MNIST_data/
+/com.xulf.learn.ml.dgl/dgl_examples/pinsage/data/
+/com.xulf.learn.ml.tf1/test_tensorboard/graph/events.out.tfevents.1641878935.jotomeMacBook-Pro-2.local
+/com.xulf.learn.ml.dgl/dgl_examples/pinsage.tar.gz
