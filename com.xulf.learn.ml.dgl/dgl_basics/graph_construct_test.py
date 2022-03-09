@@ -4,9 +4,12 @@ import torch
 
 class GraphConstructTest(unittest.TestCase):
     '''
-     一般
+     1. 基于Tensor构建图：
         同构图： dgl.graph
         异构图： dgl.heterograph
+    2.  随机图：
+        随机同构图：dgl.rand_graph
+        随机二部图：dgl.rand_bipartie
     '''
     def test_graph(self):
         '''
@@ -61,4 +64,20 @@ class GraphConstructTest(unittest.TestCase):
         assert g.num_edges() == 6
         assert g.num_edges(('user', 'follows', 'user')) == 2
         assert g.num_edges('plays') == 2
+
+
+    def test_rand_graph(self):
+        '''
+        dgl.rand_bipartite(utype, etype, vtype, num_src_nodes, num_dst_nodes, num_edges)
+        dgl.rand_graph(num_nodes, num_edges, idtype=torch.int64)
+        '''
+        #随机同构图
+        g = dgl.rand_graph(num_nodes=100, num_edges=10)
+        assert g.num_nodes() == 100
+        assert g.num_edges() == 10
+
+        #随机二部图
+        g = dgl.rand_bipartite('user', 'buys', 'game', num_src_nodes=50, num_dst_nodes=1000, num_edges=100)
+        assert g.num_nodes('user') == 50
+        assert g.num_nodes('game') == 1000
 
