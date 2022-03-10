@@ -4,6 +4,12 @@ import torch
 
 class GraphPropTest(TestCase):
     def test_graph_type(self):
+        '''
+            图分类：
+                1. 节点/边类型： 同构 vs 异构
+                2. 图结构：二部图 vs 非二部图
+        :return:
+        '''
         # 同构图（一种节点与边） vs 异构图
         g = dgl.graph((torch.tensor([0, 0, 1, 1]), torch.tensor([1, 0, 2, 3])))
         assert g.is_homogeneous == True
@@ -66,3 +72,47 @@ class GraphPropTest(TestCase):
         assert g.num_edges() == 4
         assert g.num_edges('plays') == 2
         assert g.num_edges(('user', 'plays', 'game')) == 2
+
+    def test_adjacency_info(self):
+        '''
+            邻接信息： 给定tensor - u, v
+            1. 连接边： 是否有边 - g.has_edges_between(u, v, etype=None)， 连接边id - g.edge_ids(u, v, etype=None)
+            2. 入度出度：g.in_degrees(v, etype=None),  g.out_degrees(u, etype=None)
+            3. 入边出边： 所有边放一起返回 g.in_edges(v, etype=None), g.out_edges(u, etype=None)
+            4. 邻接节点: g.successors(u, etype=None), g.predecessors(v, etype=None)
+        '''
+        g = dgl.heterograph({
+            ('user', 'follows', 'user'): (torch.tensor([0, 1]), torch.tensor([1, 2])),
+            ('user', 'follows', 'game'): (torch.tensor([0, 1, 0]), torch.tensor([1, 2, 3])),
+            ('user', 'plays', 'game'): (torch.tensor([1, 3]), torch.tensor([2, 3]))
+        })
+
+        #连接边信息
+        user_u, game_v = torch.tensor([1, 2, 3]), torch.tensor([2, 3, 3])
+
+        edge_mask = g.has_edges_between(user_u, game_v, etype='plays')
+        user_u, game_v = user_u[edge_mask], game_v[edge_mask]
+        edge_ids = g.edge_ids(user_u, game_v, etype='plays')
+
+        assert edge_mask.tolist() == [True, False, True]
+        assert user_u.tolist() == [1, 3]
+        assert game_v.tolist() == [2, 3]
+        assert edge_ids.tolist() == [0, 1]
+
+        # 入度出度
+        user_nodes = torch.tensor([0,1])
+        in_degrees = g.in_degrees(user_nodes, etype=('user', 'follows', 'user'))
+        out_degrees = g.out_degrees(user_nodes, etype=('user', 'follows', 'game'))
+        assert in_degrees.tolist() == [0, 1]
+        assert out_degrees.tolist() == [2, 1]
+
+        # 入边出边
+        user_nodes = torch.tensor([0,1])
+        out_edges = g.out_edges(user_nodes, etype=('user', 'follows', 'game'), form='eid')
+        assert out_edges.tolist() == [0, 2, 1]
+
+        #邻接节点: g.predecessors 只能查看单一节点的前序节点
+        pre_nodes = g.predecessors(1, etype=('user', 'follows', 'user'))
+        post_nodes = g.successors(1, etype=('user', 'follows', 'user'))
+        assert pre_nodes.tolist() == [0]
+        assert post_nodes.tolist() == [2]
