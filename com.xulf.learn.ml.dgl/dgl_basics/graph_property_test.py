@@ -31,7 +31,6 @@ class GraphPropTest(TestCase):
         })
         assert g.is_unibipartite == True
 
-
     def test_metagraph(self):
         '''
             两种方式获取g的元信息:
@@ -59,6 +58,52 @@ class GraphPropTest(TestCase):
         assert list(meta_g.edges()) == [('user', 'game'), ('user', 'game'), ('user', 'user')]
         assert list(meta_g['user']['game']) == ['follow_game', 'plays']
 
+    def test_features(self):
+        '''
+            节点、边ID: g.nodes(ntype=None),  g.edges(form='uv', order='eid',  etype=None)
+            节点/边特征：
+                - g.nodes[ntype].data[feat] = tensor or g.ndata[ntype] = {ntype:tensor}
+                - g.edges[etype].data[feat] = tensor or g.edata[etype] = {etype:tensor}
+        '''
+        g = dgl.heterograph({
+            ('user', 'follows', 'user'): (torch.tensor([0, 1]), torch.tensor([1, 2])),
+            ('user', 'plays', 'game'): (torch.tensor([3, 4]), torch.tensor([5, 6]))
+        })
+
+        # 获取node,edge ID:
+        assert g.nodes('user').tolist() == [0, 1, 2, 3, 4]
+
+        assert torch.equal(g.edges(etype='plays')[0], torch.tensor([3, 4]))
+        assert torch.equal(g.edges(etype='plays')[1], torch.tensor([5, 6]))
+        assert g.edges(form='eid', etype='plays').tolist() == [0, 1]
+
+        # get&set node features
+        game_h, user_h = torch.zeros(7, 1), torch.zeros(5, 1)
+        feat_dict = {'game': game_h, 'user': user_h}
+        # g.nodes[ntype].data[feat] = tensor
+        g.nodes['game'].data['h'] = game_h
+        assert torch.equal(g.nodes['game'].data['h'],  game_h)
+        assert torch.equal(g.ndata['h']['game'], game_h)
+
+        # g.ndata[ntype] = {ntype:tensor}
+        g.ndata['h'] = feat_dict
+        assert torch.equal(g.ndata['h']['game'],  game_h)
+        assert torch.equal(g.nodes['game'].data['h'],  game_h)
+
+        # get&set edge features
+        # g.edges[etype].data[feat] = tensor
+        play_h = torch.ones(2, 1)
+        g.edges['plays'].data['h'] = play_h
+        assert torch.equal(g.edges['plays'].data['h'], play_h)
+        assert torch.equal(g.edges[('user', 'plays', 'game')].data['h'], play_h)
+        assert torch.equal(g.edata['h'][('user', 'plays', 'game')], play_h)
+
+        # g.edata[etype] = {etype:tensor}
+        play_h = torch.zeros(2, 1)
+        g.edata['h'] = {'plays':play_h}
+        assert torch.equal(g.edges['plays'].data['h'], play_h)
+        assert torch.equal(g.edata['h'][('user', 'plays', 'game')], play_h)
+
     def test_graph_statistics(self):
         g = dgl.heterograph({
             ('user', 'follows', 'user'): (torch.tensor([0, 1]), torch.tensor([1, 2])),
@@ -80,6 +125,7 @@ class GraphPropTest(TestCase):
             2. 入度出度：g.in_degrees(v, etype=None),  g.out_degrees(u, etype=None)
             3. 入边出边： 所有边放一起返回 g.in_edges(v, etype=None), g.out_edges(u, etype=None)
             4. 邻接节点: g.successors(u, etype=None), g.predecessors(v, etype=None)
+            5. 获取邻接矩阵：g.adj(fmt=etype=None)
         '''
         g = dgl.heterograph({
             ('user', 'follows', 'user'): (torch.tensor([0, 1]), torch.tensor([1, 2])),
@@ -116,3 +162,10 @@ class GraphPropTest(TestCase):
         post_nodes = g.successors(1, etype=('user', 'follows', 'user'))
         assert pre_nodes.tolist() == [0]
         assert post_nodes.tolist() == [2]
+
+        #邻接矩阵
+        m = g.adj(etype=('user', 'plays', 'game'))
+        assert m[1, 2] == 1
+        assert m[3, 3] == 1
+        assert m[0, 2] == 0
+        assert torch.sparse.sum(m)==2
