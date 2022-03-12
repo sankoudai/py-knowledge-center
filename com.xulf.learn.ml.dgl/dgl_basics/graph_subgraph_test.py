@@ -84,6 +84,8 @@ class SubgraphTest(TestCase):
                 - nodes: node_tensor/nid_mask or {etype:node_tensor/nid_mask}
                 - relabel_nodes:  if True,  relabel nodes and store original Id in g.ndata[dgl.NID] (not remove isolated nodes)
                 - store_ids: if True, store original edges IDs in g.edata[dgl.EID]
+
+            (另有单侧的子图，用法类似： dgl.in_subgraph(g, nodes,..), dgl.out_subgraph(g, nodes,..))
         '''
 
         # homegeneous graph: 0-1-2-3-4-5
