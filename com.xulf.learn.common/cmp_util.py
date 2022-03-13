@@ -1,6 +1,11 @@
 import tensorflow as tf
 import numpy as np
 
+def assert_set_equal(s1, s2):
+    s1 = set(s1)
+    s2 = set(s2)
+    assert s1 == s2
+
 def assert_shape(tensor, shape):
     tensor_shape = tf.shape(tensor).numpy()
     assert len(tensor_shape) == len(shape)

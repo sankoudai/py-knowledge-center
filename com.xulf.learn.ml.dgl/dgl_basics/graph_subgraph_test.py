@@ -76,6 +76,9 @@ class SubgraphTest(TestCase):
         assert torch.equal(old_eids['plays'].sort().values, torch.tensor([1, 2]))
         assert torch.equal(old_eids['follows'].sort().values, torch.tensor([1]))
 
+        # todo: use g.filter_edges to get eids, and dgl.edge_subgraph to extract subgraph
+
+
     def test_node_subgraph(self):
         '''
             2种等价形式：
@@ -103,6 +106,8 @@ class SubgraphTest(TestCase):
 
         assert torch.equal(sg1.nodes(), torch.tensor([0, 1, 2]))
         assert torch.equal(sg1.ndata[dgl.NID].sort().values, nids)
+
+        # todo: use g.filter_nodes to get nodes, and dgl.node_subgraph to extract subgraph
 
     def test_node_type_subgraph(self):
         '''
@@ -135,3 +140,11 @@ class SubgraphTest(TestCase):
         assert sub_g.num_nodes('user') == 9
         assert sub_g.num_edges('plays') == 3
         assert torch.equal(sub_g.edata['h'], torch.tensor([[0.], [1.], [2.]]))
+
+    # todo: 完成测试
+    def test_slice_subgraph(self):
+        '''
+            g[srctype, etype, dsttype]:
+            说明： 获取符合匹配条件的子图
+            参考：https://docs.dgl.ai/en/0.7.x/generated/dgl.DGLGraph.__getitem__.html
+        '''
