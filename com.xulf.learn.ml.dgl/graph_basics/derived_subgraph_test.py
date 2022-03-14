@@ -78,7 +78,6 @@ class SubgraphTest(TestCase):
 
         # todo: use g.filter_edges to get eids, and dgl.edge_subgraph to extract subgraph
 
-
     def test_node_subgraph(self):
         '''
             2种等价形式：
@@ -148,3 +147,71 @@ class SubgraphTest(TestCase):
             说明： 获取符合匹配条件的子图
             参考：https://docs.dgl.ai/en/0.7.x/generated/dgl.DGLGraph.__getitem__.html
         '''
+
+    def test_compact_graphs(self):
+        '''
+            dgl.compact_graphs(graphs, always_preserve=None, copy_ndata=True, copy_edata=True)
+                作用：去除在所有graphs中无连边的节点， 返回新的graphs
+                返回值：new_graphs
+                参数:
+                    - graphs: 所有图{ntype:node_num}需要完全相同
+        '''
+
+        g1 = dgl.heterograph({('user', 'plays', 'game'): ([1, 3], [3, 5])},
+                             {'user': 20, 'game': 10})
+
+        g2 = dgl.heterograph({('user', 'plays', 'game'): ([1, 6], [6, 8])},
+                             {'user': 20, 'game': 10})
+
+        # 单图
+        new_g = dgl.compact_graphs(g1)
+        assert new_g.num_nodes('user') == 2
+        assert torch.equal(new_g.ndata[dgl.NID]['user'], torch.tensor([1, 3]))
+
+        # 多图
+        new_g1, new_g2 = dgl.compact_graphs([g1, g2])
+        assert new_g1.num_nodes('user') == new_g2.num_nodes('user') == 3
+        assert torch.equal(new_g1.ndata[dgl.NID]['user'], torch.tensor([1, 3, 6]))
+
+    def test_sampling_subgraph(self):
+        '''
+        种子节点的采样子图：
+            dgl.sampling.sample_neighbors(g, nodes, fanout, edge_dir='in', prob=None, ..)
+            作用： 以nid_tensor为种子采样边，返回子图(所有节点+采样的边)
+            参数：
+                - nodes:  nid_tensor or {ntype:nid_tensor}
+                - fanout: int or {etype:int}, 一个节点采样边的数量
+
+            https://docs.dgl.ai/en/0.7.x/generated/dgl.sampling.sample_neighbors.html
+
+
+        '''
+        g = dgl.graph(([1, 2, 3, 4, 5], [0, 0, 0, 0, 0]))
+        g.edata['prob'] = torch.FloatTensor([0., 1., 0., 1., 1.])
+
+        sub_g = dgl.sampling.sample_neighbors(g, [0], fanout=3, prob='prob')
+        assert sub_g.num_nodes() == 6
+        assert sub_g.num_edges() == 3
+        assert torch.equal(sub_g.edata[dgl.EID].sort().values, torch.tensor([1, 3, 4]))
+
+    # todo: impl & proper placement
+    def test_node_edge_subset(self):
+        '''
+            获取符合特点条件的
+
+            g.filter_nodes(predicate, ntype=None)
+            参数:
+                - predicate: nodes-->bool_tensor
+            返回：nid_tensor
+
+            g.filter_edges(predicate, etype=None)
+            参数:
+                - predicate: edges-->bool_tensor
+            返回：eid_tensor
+
+            参考：
+            https://docs.dgl.ai/en/0.7.x/generated/dgl.DGLGraph.filter_nodes.html
+            https://docs.dgl.ai/en/0.7.x/generated/dgl.DGLGraph.filter_edges.html
+        '''
+        pass
+

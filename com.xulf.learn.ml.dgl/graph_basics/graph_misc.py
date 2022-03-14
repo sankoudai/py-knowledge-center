@@ -4,24 +4,7 @@ from dgl import function as fn
 import torch
 
 class MiscTest(unittest.TestCase):
-    # todo: impl & proper placement
-    def test_filter(self):
-        '''
-            g.filter_nodes(predicate, ntype=None)
-            参数:
-                - predicate: nodes-->bool_tensor
-            返回：nid_tensor
 
-            g.filter_edges(predicate, etype=None)
-            参数:
-                - predicate: edges-->bool_tensor
-            返回：eid_tensor
-
-            参考：
-            https://docs.dgl.ai/en/0.7.x/generated/dgl.DGLGraph.filter_nodes.html
-            https://docs.dgl.ai/en/0.7.x/generated/dgl.DGLGraph.filter_edges.html
-        '''
-        pass
 
     def test_local_scope(self):
         '''
