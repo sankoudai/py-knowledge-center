@@ -2,6 +2,8 @@ import unittest
 import dgl
 import dgl.function as fn
 import torch
+import math
+from dgl.nn.functional import edge_softmax
 
 
 class GraphComputeTest(unittest.TestCase):
@@ -10,7 +12,7 @@ class GraphComputeTest(unittest.TestCase):
         - 依赖单边特征的计算、依赖单节点特征的计算
             逻辑上可以使用简单的tensor operations与特征赋值来达到， dgl也提供了声明式方法g.apply_nodes, g.apply_edges
         - 计算依赖图连接关系的计算
-            使用imperative方式表达很复杂， dgl提供了declarative methods来完成
+            使用imperative方式表达很复杂， dgl提供了declarative methods来完成: g.update_all, g.multi_update_all
     '''
 
     def test_local_computation(self):
@@ -68,7 +70,7 @@ class GraphComputeTest(unittest.TestCase):
         '''
 
         #g.update_all
-        # 完全二叉树图: 0<-1,2, 1<-3,4, 2<-5,6
+        # 完全二叉树图: 1,2->0, 3,4->1, 5,6->2
         g = dgl.heterograph({('user', 'follows', 'user'): ([1, 2, 3, 4, 5, 6], [0, 0, 1, 1, 2, 2])})
         g.nodes['user'].data['h'] = torch.ones(7, 1)
         g.edges['follows'].data['w'] = torch.tensor([[1.0], [1.0], [0.5], [0.5], [0.1], [0.1]])
@@ -114,16 +116,28 @@ class GraphComputeTest(unittest.TestCase):
             cross_sum)
         assert torch.equal(g.nodes['user'].data['h'], torch.tensor([[0.], [2.], [1.]]))
 
-    # todo: impl & proper placement
-    def test_filter(self):
-        '''
-            g.filter_nodes(predicate, ntype=None)
-            参数:
-                - predicate: nodes-->bool_tensor
-            返回：nid_tensor
 
-            g.filter_edges(predicate, etype=None)
-            参数:
-                - predicate: edges-->bool_tensor
-            返回：eid_tensor
+class GraphComputeUsageTest(unittest.TestCase):
+    def test_edge_softmax(self):
         '''
+            对边：u->v
+                𝑎ij=exp(𝑧𝑖𝑗)/∑i∈N(j)exp(𝑧𝑖𝑗)
+        '''
+        # 星形图
+        g = dgl.graph(([1, 2, 3], [0, 0, 0]))
+        edge_logits = torch.tensor([[math.log(1)], [math.log(4)], [math.log(5)]])
+
+        # 自定义edge_softmax
+        def edge_softmax_func(g, edge_logits):
+            # dst节点计算加和, 然后对边特征归一
+            # g的边、节点特征不会改变！
+            with g.local_scope():
+                g.edata['exp_z'] = torch.exp(edge_logits)
+                g.update_all(fn.copy_e('exp_z', 'h'), fn.sum('h', 'sum_exp_z'))
+                g.apply_edges(lambda edges: {'a':edges.data['exp_z'] / edges.dst['sum_exp_z']})
+                return g.edata['a']
+
+        assert torch.equal(edge_softmax_func(g, edge_logits), torch.tensor([[0.1], [0.4] ,[0.5]]))
+        assert torch.allclose(edge_softmax(g, edge_logits), torch.tensor([[0.1], [0.4] ,[0.5]]))
+
+
