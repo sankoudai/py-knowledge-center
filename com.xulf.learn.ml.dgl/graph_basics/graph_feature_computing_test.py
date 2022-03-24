@@ -139,5 +139,3 @@ class GraphComputeUsageTest(unittest.TestCase):
 
         assert torch.equal(edge_softmax_func(g, edge_logits), torch.tensor([[0.1], [0.4] ,[0.5]]))
         assert torch.allclose(edge_softmax(g, edge_logits), torch.tensor([[0.1], [0.4] ,[0.5]]))
-
-
