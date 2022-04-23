@@ -19,12 +19,8 @@ class DataloaderTest(TestCase):
                         节点任务：(nids + sampler) => input_nodes, out_nodes, blocks
                         边任务： (eids + EdgePredictionSampler)=> input_nodes, pos_graph, neg_graph, blocks
                 )
-
-            说明：
-            1）对节点任务， indices
-            EdgeDataLoader(g,
         '''
-    def test_node_dataloader(self):
+    def test_dataloader(self):
         g = dgl.rand_graph(300, 300)
 
 
@@ -58,6 +54,3 @@ class DataloaderTest(TestCase):
         assert pos_g.num_edges() == batch_size
         assert neg_g.num_edges() == batch_size * neg_k
         assert len(blocks) == 2
-
-
-# def test_edge_dataloader(self):
