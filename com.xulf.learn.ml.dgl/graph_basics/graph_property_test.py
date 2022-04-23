@@ -90,7 +90,7 @@ class GraphPropTest(TestCase):
         assert g.num_edges('plays') == 2
         assert g.num_edges(('user', 'plays', 'game')) == 2
 
-    def test_adjacency_info(self):
+    def test_adjacency_node(self):
         '''
             邻接信息： 给定tensor - u, v
             1. 连接边： 是否有边 - g.has_edges_between(u, v, etype=None)， 连接边id - g.edge_ids(u, v, etype=None)
@@ -141,3 +141,15 @@ class GraphPropTest(TestCase):
         assert m[3, 3] == 1
         assert m[0, 2] == 0
         assert torch.sparse.sum(m)==2
+
+    def test_adjacency_edge(self):
+        '''
+        给定: eids
+        1）找出入端点：g.find_edges(eids, etype=None)
+        '''
+        g = dgl.graph((torch.tensor([0, 0, 1, 1]), torch.tensor([1, 0, 2, 3])))
+        eids = torch.tensor([0, 1])
+        u,v = g.find_edges(eids)
+
+        assert torch.equal(u, torch.tensor([0, 0]))
+        assert torch.equal(v, torch.tensor([1, 0]))
