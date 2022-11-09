@@ -26,15 +26,15 @@ from builder import PandasGraphBuilder
 from data_utils import *
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('directory', type=str)
-    parser.add_argument('output_path', type=str)
-    args = parser.parse_args()
-    directory = args.directory
-    output_path = args.output_path
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('directory', type=str)
+    # parser.add_argument('output_path', type=str)
+    # args = parser.parse_args()
+    # directory = args.directory
+    # output_path = args.output_path
 
-    # directory = '../../data/ml-1m/'
-    # output_path = './data/data.pkl'
+    directory = '../../data/ml-1m/'
+    output_path = './data/data.pkl'
 
     ## Build heterogeneous graph
 

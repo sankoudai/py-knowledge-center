@@ -16,5 +16,5 @@ v = [0, 1, 2, 3, 2]
 g = dgl.heterograph({('_U', '_E', '_V'): (u, v)})
 u_fea = th.rand(2, 5)
 v_fea = th.rand(4, 10)
-conv = SAGEConv((5, 10), 2, 'mean')
+conv = SAGEConv((5, 10), 2, 'lstm')
 res = conv(g, (u_fea, v_fea))

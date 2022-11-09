@@ -24,8 +24,15 @@ class DictTest(unittest.TestCase):
     def test_access(self):
         printVar(self.str_key_dict['name'])
 
+        # get
+        assert self.str_key_dict.get("gender", "default_gender") == 'default_gender'
+
         # nonexist key results in exception
-        printVar(self.str_key_dict['gender'])
+        try:
+            printVar(self.str_key_dict['gender'])
+            assert False
+        except:
+            assert True
 
     def test_modify(self):
         self.str_key_dict['name'] = 'jimmy'
