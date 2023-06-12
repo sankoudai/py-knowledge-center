@@ -6,14 +6,19 @@ from except_util import *
 
 class TestVersion(unittest.TestCase):
     def testSession(self):
-        # tf2没有Session
-        # tf1不同Session维护不同的变量
-        w = tf1.Variable(10)
 
-        sess1 = tf1.Session()
-        sess2 = tf1.Session()
+        colors_column = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list(
+            key='color',
+            vocabulary_list=["Green", "Red", "Blue", "Yellow"]
+        ))
 
-        assert_equal(20, sess1.run(w.assign_add(10)))
-        assert_equal(30, sess1.run(w.assign_add(10)))
 
-        assert_equal(20, sess2.run(w.assign_add(10)))
+        input_layer = tf.feature_column.input_layer(
+            features={'color': tf.constant(value="Red", dtype=tf.string, shape=(1,))},
+            feature_columns=[colors_column])
+
+
+        with tf.Session() as sess:
+            sess.run(tf.initialize_all_tables())
+            print(sess.run(input_layer))
+

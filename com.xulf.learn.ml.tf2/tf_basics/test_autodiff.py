@@ -112,3 +112,29 @@ class TestAutoDiff(unittest.TestCase):
         grads = tape.gradient(loss, layer.trainable_variables)
         print(grads)
 
+    def test_stop_gradient(self):
+        import tensorflow as tf
+
+        # 定义 x
+        x = tf.Variable(2.0)
+
+        # 定义 y1 和 y2
+        y1 = tf.square(x)
+        y2 = tf.Variable(3.0 * x)
+
+        # 定义 y
+        y = y1 + y2
+
+        # 停止梯度在 y2 中的传播
+        y2 = tf.stop_gradient(y2)
+
+        # 定义损失函数
+        loss = tf.square(y)
+
+        # 计算梯度
+        grads = tf.gradients(loss, [x])
+
+        # 打印梯度
+        with tf.Session() as sess:
+            sess.run(tf.global_variables_initializer())
+            print(sess.run(grads))
